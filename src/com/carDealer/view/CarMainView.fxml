@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carDealer.controller.CarMainController">
+   <children>
+      <SplitPane dividerPositions="0.17725752508361203" layoutX="7.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <HBox layoutX="2.0" layoutY="1.0" prefHeight="104.0" prefWidth="878.0">
+                     <children>
+                        <ImageView fitHeight="106.0" fitWidth="211.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../cars.jpeg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <SplitPane dividerPositions="0.7674897119341564" orientation="VERTICAL" prefHeight="488.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="767.0">
+                           <children>
+                              <TableView fx:id="carTableView" layoutX="6.0" layoutY="7.0" prefHeight="369.0" prefWidth="790.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                    <TableColumn fx:id="vinColumn" prefWidth="140.0" text="VIN Number" />
+                                    <TableColumn fx:id="makeColumn" prefWidth="143.0" text="Make" />
+                                    <TableColumn fx:id="modelColumn" prefWidth="117.0" text="Model" />
+                                  <TableColumn fx:id="yearColumn" prefWidth="119.0" text="Year" />
+                                   <TableColumn fx:id="colorColumn" prefWidth="119.0" text="Color" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="47.0" prefWidth="796.0">
+                           <children>
+                              <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="109.0" prefWidth="796.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <items>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                       <children>
+                                          <HBox prefHeight="50.0" prefWidth="835.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-41.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <TextField fx:id="vinTextField" promptText="VIN Number" />
+                                                <TextField fx:id="makeTextField" promptText="Make" />
+                                                <TextField fx:id="modelTextField" promptText="Model" />
+                                                <TextField fx:id="yearTextField" promptText="Year" />
+                                                <ColorPicker fx:id="colorTextField" promptText="Color" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                       <children>
+                                          <HBox prefHeight="49.0" prefWidth="794.0" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#newCarButtonPushed" text="Add New Car" />
+                                                <Button mnemonicParsing="false" onAction="#deleteButtonPushed" text="Delete Car" />
+                                                <Button mnemonicParsing="false" onAction="#changeSceneToCarDetailedView" text="Detailed  info" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
