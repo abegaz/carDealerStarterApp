@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import com.carDealer.model.Customer;
 import com.jfoenix.controls.JFXComboBox;
 
@@ -27,6 +31,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import com.carDealer.model.*;
+import application.CarDealerDBConfig;
 public class CustomerMainController {
 
     //configure the customer of car  dealer table view
@@ -77,19 +82,40 @@ public class CustomerMainController {
         ObservableList<Customer> selectedRows, allCustomer;
         allCustomer = customerTableView.getItems();
 
+
         //this gives us the rows that were selected
         selectedRows = customerTableView.getSelectionModel().getSelectedItems();
 
         //loop over the selected rows and remove the Customer objects from the table
-        for (Customer Customer: selectedRows)
+        for (Customer customer: selectedRows)
         {
-        	allCustomer.remove(Customer);
+        	allCustomer.remove(customer);
+        	String query = "delete from customer where firstName = ? and lastName = ?";
+
+        	try(
+        	    Connection conn = CarDealerDBConfig.getConnection();
+        	    PreparedStatement updateprofile = conn.prepareStatement(query);
+        	){
+        	updateprofile.setString(1, customer.getFirstName());
+        	updateprofile.setString(2, customer.getLastName());
+        	    updateprofile.executeUpdate();
+
+
+        	} catch (Exception e) {
+    			System.out.println("Status: operation failed due to "+e);
+
+    		}
+
+
         }
+
+
     }
   // This method creates a new Customer object and adds it to the table view
 
     public void newCustomerButtonPushed()
     {
+
         Customer newCustomer = new Customer(firstNameTextField.getText(),
                                       lastNameTextField.getText(),
                                       creditHistoryTextField.getText(),
@@ -101,7 +127,35 @@ public class CustomerMainController {
         //Get all the items from the table as a list, then add the new Customer to
         //the list
         customerTableView.getItems().add(newCustomer);
-    }
+
+        String query = "insert into customer " + "(firstName, lastName, creditHistory, address,phoneNumber)"
+				+ "values(?,?,?,?,?)";
+
+		try (Connection conn = CarDealerDBConfig.getConnection();
+				PreparedStatement insertprofile = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
+
+			insertprofile.setString(1, newCustomer.getFirstName());
+			insertprofile.setString(2, newCustomer.getLastName());
+			insertprofile.setString(3, newCustomer.getCreditHistory());
+			insertprofile.setString(4, newCustomer.getPhone());
+
+
+			// get the number of return rows
+			int affectedRow = insertprofile.executeUpdate();
+
+			if (affectedRow == 1) {
+				System.out.println("Operation is successful");
+				//keys = insertprofile.getGeneratedKeys();
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Status: operation failed due to "+e);
+
+		}
+
+		}
+
 
  // ObservableList: A list that enables listeners to track changes when they occur
  // The following  method will return an ObservableList of  object
@@ -110,9 +164,32 @@ public class CustomerMainController {
         public ObservableList<Customer>  getCustomerList()
         {
             ObservableList<Customer> customer = FXCollections.observableArrayList();
-             customer.add(new Customer("Cromer","Dom","Very good", "3003 Lake Union", "770-123-3434"));
+             //customer.add(new Customer("Cromer","Dom","Very good", "3003 Lake Union", "770-123-3434"));
             customer.add(new Customer("Job.","Tom","Very good","82 College Circle", "770-455-5482"));
 
+            String SQLQuery = "select firstName, lastName, creditHistory, address,phoneNumber from customer";
+    		ResultSet rs = null;
+
+    		try(
+    				Connection conn = CarDealerDBConfig.getConnection();
+    				PreparedStatement displayprofile = conn.prepareStatement(SQLQuery);
+    		){
+    			//displayprofile.setInt(1, cutomerId);
+    			rs = displayprofile.executeQuery();
+
+    			// check to see if receiving any data
+    			while (rs.next()){
+    				customer.add(new Customer(rs.getString("firstName").toString(),rs.getString("lastName").toString(),rs.getString("creditHistory").toString(),rs.getString("address").toString(),rs.getString("phoneNumber").toString()));
+
+    			}
+    		}catch(SQLException ex){
+    			CarDealerDBConfig.displayException(ex);
+    			return null;
+    		}finally{
+    			if(rs != null){
+    				//rs.close();
+    			}
+    		}
             return customer;
         }
  // Method used to enable the detailed view button on mouse click event
