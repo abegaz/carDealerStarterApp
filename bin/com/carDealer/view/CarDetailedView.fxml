@@ -29,7 +29,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
               <children>
-                  <Label text="Car VIN">
+                  <Label text="Car VIN Number">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>

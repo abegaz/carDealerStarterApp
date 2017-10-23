@@ -137,8 +137,8 @@ public class CustomerMainController {
 			insertprofile.setString(1, newCustomer.getFirstName());
 			insertprofile.setString(2, newCustomer.getLastName());
 			insertprofile.setString(3, newCustomer.getCreditHistory());
-			insertprofile.setString(4, newCustomer.getPhone());
-
+			insertprofile.setString(4, newCustomer.getAddress());
+			insertprofile.setString(5, newCustomer.getPhone());
 
 			// get the number of return rows
 			int affectedRow = insertprofile.executeUpdate();
