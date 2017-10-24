@@ -139,10 +139,7 @@ public class CustomerMainController {
 			insertprofile.setString(3, newCustomer.getCreditHistory());
 			insertprofile.setString(4, newCustomer.getAddress());
 			insertprofile.setString(5, newCustomer.getPhone());
-<<<<<<< HEAD
 
-=======
->>>>>>> 97410c0a9d1533c547c830c635be45c7c58fc732
 
 			// get the number of return rows
 			int affectedRow = insertprofile.executeUpdate();
